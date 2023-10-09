@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 
 # Чтение данных
-df = pd.read_csv('lab2/dataset/heart_disease_data.csv')
+df = pd.read_csv('dataset/heart_disease_data.csv')
 
 # Подготовка данных
 X = df.drop(['target'], axis=1)
