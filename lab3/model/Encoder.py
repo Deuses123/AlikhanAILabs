@@ -1,6 +1,4 @@
-import string
 import random
-import numpy as np
 import re
 
 
@@ -9,19 +7,19 @@ class Encoder:
         self.__build_cipher_mapping()
 
     def __build_cipher_mapping(self):
-        """ builds the subsitution cipher mapping for 26 letters """
+        """Создание шифра для замены букв"""
         random.seed(7)
-        letters_original = list(string.ascii_lowercase)
+        letters_original = list('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')
         letters_shuffled = random.sample(
-            list(string.ascii_lowercase), len(list(string.ascii_lowercase))
+            list('абвгдеёжзийклмнопрстуфхцчшщъыьэюя'), len(list('абвгдеёжзийклмнопрстуфхцчшщъыьэюя'))
         )
         self.encoder_cipher_mapping = {
             letters_original[i]: letters_shuffled[i] for i in range(len(letters_original))
         }
 
     def encode(self, message):
-        """ method to encode the message using the cipher mapping """
-        message = re.sub("[^a-zA-Z]", " ", message)
+        """Метод для кодирования сообщения с использованием шифра"""
+        message = re.sub("[^а-яёА-ЯЁ]", " ", message)
         message_tokens = list(message.lower())
         for i in range(len(message)):
             if message_tokens[i] in self.encoder_cipher_mapping:
@@ -29,8 +27,10 @@ class Encoder:
         encoded_message = "".join(message_tokens)
         return encoded_message
 
-    def decode(self, encoded_message, mapping):
-        """ method to decode the message using the cipher mapping """
+    def decode(self, encoded_message, mapping=None):
+        """Метод для декодирования сообщения с использованием отображения шифра"""
+        if mapping is None:
+            mapping = self.encoder_cipher_mapping
         message_tokens = list(encoded_message.lower())
         for i in range(len(encoded_message)):
             if message_tokens[i] in mapping:
